@@ -21,20 +21,34 @@ export async function createContext(
     user = null;
   }
 
-  // LOCAL TESTING ONLY: auto-login as a test user
-  if (!user && process.env.NODE_ENV === "development") {
+  // Auto-login default user so SmartSpend works seamlessly without Manus login
+  if (!user) {
     try {
       const openId = "local-dev-user";
       await db.upsertUser({
         openId,
-        name: "Local User",
-        email: "local@example.com",
+        name: "SmartSpend User",
+        email: "user@smartspend.local",
         loginMethod: "local",
         lastSignedIn: new Date(),
       });
       user = (await db.getUserByOpenId(openId)) ?? null;
     } catch (error) {
-      console.error("[Local login] failed:", error);
+      console.warn("[Auto login] DB upsert failed, using memory fallback:", error);
+    }
+
+    if (!user) {
+      user = {
+        id: 1,
+        openId: "local-dev-user",
+        name: "SmartSpend User",
+        email: "user@smartspend.local",
+        loginMethod: "local",
+        role: "user",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        lastSignedIn: new Date(),
+      };
     }
   }
 
