@@ -44,7 +44,7 @@ export async function createContext(
         name: "SmartSpend User",
         email: "user@smartspend.local",
         loginMethod: "local",
-        role: "user",
+        role: "admin",
         createdAt: new Date(),
         updatedAt: new Date(),
         lastSignedIn: new Date(),

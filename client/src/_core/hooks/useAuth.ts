@@ -6,7 +6,7 @@ const DEFAULT_USER = {
   openId: "local-dev-user",
   name: "SmartSpend User",
   email: "user@smartspend.local",
-  role: "user" as const,
+  role: "admin" as const,
 };
 
 type UseAuthOptions = {
