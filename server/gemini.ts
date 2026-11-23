@@ -15,6 +15,7 @@ export async function askGemini(question: string, context: unknown, history: Arr
     if (!text) return { ok: false as const, message: "Gemini returned an empty response. Please try again." };
     return { ok: true as const, text, model: modelName() };
   } catch (error) {
+        console.error("Gemini error:", error);
     const message = error instanceof Error ? error.message.toLowerCase() : "";
     if (message.includes("429") || message.includes("quota") || message.includes("rate")) return { ok: false as const, message: "Gemini is temporarily rate-limited. Please try again shortly." };
     return { ok: false as const, message: "The financial assistant is temporarily unavailable. Check the server Gemini configuration and try again." };
